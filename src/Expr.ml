@@ -35,14 +35,14 @@ let update x v s = fun y -> if x = y then v else s y
 (* An example of a non-trivial state: *)                                                   
 let s = update "x" 1 @@ update "y" 2 @@ update "z" 3 @@ update "t" 4 empty
 
-(* Some testing; comment this definition out when submitting the solution. *)
+(* Some testing; comment this definition out when submitting the solution.
 let _ =
   List.iter
     (fun x ->
        try  Printf.printf "%s=%d\n" x @@ s x
        with Failure s -> Printf.printf "%s\n" s
     ) ["x"; "a"; "y"; "z"; "t"; "b"]
-
+ *)
 (* Expression evaluator
 
      val eval : state -> expr -> int
@@ -50,5 +50,31 @@ let _ =
    Takes a state and an expression, and returns the value of the expression in 
    the given state.
 *)
-let eval = failwith "Not implemented yet"
-                    
+let rec eval state expr =
+    let boolToInt value = 
+       if value then 1 else 0 in
+    let intToBool value = 
+       if value !=0 then true else false in
+       
+    match expr with
+    | Const x -> x
+    | Var x -> state x
+    | Binop (operator, value1, value2) -> 
+    let arg1= eval state value1 in
+    let arg2= eval state value2 in
+    
+	 match operator with 
+    | "+" -> arg1 + arg2
+    | "-" -> arg1 - arg2
+    | "*" -> arg1 * arg2
+	 | "/" -> arg1 / arg2
+	 | "%" -> arg1 mod arg2
+	 | "==" -> boolToInt (arg1 == arg2)
+	 | "!=" -> boolToInt (arg1 !=arg2)
+	 | ">" -> boolToInt (arg1 >arg2)
+	 | "<" -> boolToInt (arg1 <arg2)
+	 | ">=" -> boolToInt (arg1 >=arg2)
+	 | "<=" -> boolToInt (arg1 <=arg2)
+	 | "!!" ->boolToInt( intToBool arg1 || intToBool arg2)
+	 | "&&" ->boolToInt( intToBool arg1 && intToBool arg2)
+    | _ ->failwith "Undefined operator"
