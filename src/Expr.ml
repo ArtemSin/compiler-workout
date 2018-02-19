@@ -63,18 +63,18 @@ let rec eval state expr =
     let arg1= eval state value1 in
     let arg2= eval state value2 in
     
-	 match operator with 
+    match operator with 
     | "+" -> arg1 + arg2
     | "-" -> arg1 - arg2
     | "*" -> arg1 * arg2
-	 | "/" -> arg1 / arg2
-	 | "%" -> arg1 mod arg2
-	 | "==" -> boolToInt (arg1 == arg2)
-	 | "!=" -> boolToInt (arg1 !=arg2)
-	 | ">" -> boolToInt (arg1 >arg2)
-	 | "<" -> boolToInt (arg1 <arg2)
-	 | ">=" -> boolToInt (arg1 >=arg2)
-	 | "<=" -> boolToInt (arg1 <=arg2)
-	 | "!!" ->boolToInt( intToBool arg1 || intToBool arg2)
-	 | "&&" ->boolToInt( intToBool arg1 && intToBool arg2)
+    | "/" -> arg1 / arg2
+    | "%" -> arg1 mod arg2
+    | "==" -> boolToInt (arg1 == arg2)
+    | "!=" -> boolToInt (arg1 !=arg2)
+    | ">" -> boolToInt (arg1 >arg2)
+    | "<" -> boolToInt (arg1 <arg2)
+    | ">=" -> boolToInt (arg1 >=arg2)
+    | "<=" -> boolToInt (arg1 <=arg2)
+    | "!!" ->boolToInt( intToBool arg1 || intToBool arg2)
+    | "&&" ->boolToInt( intToBool arg1 && intToBool arg2)
     | _ ->failwith "Undefined operator"
