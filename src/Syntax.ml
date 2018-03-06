@@ -41,6 +41,7 @@ module Expr =
        Takes a state and an expression, and returns the value of the expression in 
        the given state.
     *)
+
     (* Simple expressions: syntax and semantics *)
 
 (* Opening a library for generic programming (https://github.com/dboulytchev/GT).
@@ -81,6 +82,9 @@ let intToBool value =
 	
 		 
 
+    let eval _ = failwith "Not implemented yet"
+
+
   end
                     
 (* Simple statements: syntax and sematics *)
@@ -104,6 +108,7 @@ module Stmt =
        Takes a configuration and a statement, and returns another configuration
     *)
     let eval _ = failwith "Not implemented yet"
+
       
 let rec eval (s, i, o) stmt = 
        match stmt with
@@ -111,6 +116,7 @@ let rec eval (s, i, o) stmt =
 	|Write exp -> (s, i, o @ [Expr.eval s exp])
 	|Assign(x, exp) -> (Expr.update x (Expr.eval s exp) s, i, o)
 	|Seq(l, r) -> eval (eval (s, i, o) l) r;;  	  
+
   end
 
 (* The top-level definitions *)
@@ -124,7 +130,6 @@ type t = Stmt.t
 
    Takes a program and its input stream, and returns the output stream
 *)
-
 
 let eval i p =
   let _, _, o = Stmt.eval (Expr.empty, i, []) p in o
