@@ -24,6 +24,7 @@ type config = int list * Syntax.Stmt.config
    Takes a configuration and a program, and returns a configuration as a result
  *)                         
 let eval _ = failwith "Not yet implemented"
+
 let rec eval (stack, (s, i, o)) p = 
 	if (List.length p)=0 
 	  then (stack, (s, i, o))
@@ -36,6 +37,7 @@ let rec eval (stack, (s, i, o)) p =
     |LD x -> ((s x)::stack, (s, i, o))
 	|ST x -> (match stack with first::rest -> (rest, (Syntax.Expr.update x first s, i, o)))
 	) (List.tl p);;
+
 (* Top-level evaluation
 
      val run : int list -> prg -> int list
@@ -53,6 +55,7 @@ let run i p = let (_, (_, _, o)) = eval ([], (Syntax.Expr.empty, i, [])) p in o
  *)
 
 let compile _ = failwith "Not yet implemented"
+
 let rec compile stmt = 
 	let rec compile_exp exp = 
 		match exp with Syntax.Expr.Const c -> [CONST c]
@@ -65,3 +68,4 @@ let rec compile stmt =
     |Syntax.Stmt.Assign(x, exp) -> (compile_exp exp) @ [ST x]
 	|Syntax.Stmt.Seq(l, r) -> (compile l) @ (compile r) ;;
  
+
